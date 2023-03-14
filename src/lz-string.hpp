@@ -1,15 +1,14 @@
-#pragma once
-
 /*
+ * SPDX-License-Identifier: MIT
+ * Copyright (c) 2021 Andrey Krasnov
+ * Copyright © 2023 Dylan Baker
+ *
  * C++ implementation of LZ-String, version 1.4.4
  * https://github.com/pieroxy/lz-string
- * https://github.com/andykras/lz-string-cpp
- *
- * MIT License
- *
- * Copyright (c) 2021 Andrey Krasnov
- *
+ * https://github.com/dcbaker/lz-string-cpp
  */
+
+#pragma once
 
 #include <string>
 #include <unordered_map>

@@ -6,7 +6,7 @@ project(
   'cpp',
   version : '0.1-devel',
   meson_version : '>= 0.60',
-  default_options : ['cpp_std=c++11', 'b_ndebug=if-release'],
+  default_options : ['cpp_std=c++14', 'b_ndebug=if-release'],
 )
 
 cpp = meson.get_compiler('cpp')

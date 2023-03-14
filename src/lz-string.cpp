@@ -255,7 +255,7 @@ string _compress(const string & uncompressed, int bitsPerChar, Fn getCharFromInt
     return context_data;
 }
 
-template <typename Fn> string _decompress(int length, int resetValue, Fn getNextValue) {
+template <typename Fn> string _decompress(string::size_type length, int resetValue, Fn getNextValue) {
     std::unordered_map<int, string> dictionary;
 
     int next = 0;
@@ -269,7 +269,9 @@ template <typename Fn> string _decompress(int length, int resetValue, Fn getNext
     string c;
 
     struct {
-        int val, position, index;
+        int val;
+        int position;
+        string::size_type index;
     } data{getNextValue(0), resetValue, 1};
 
     bits = 0;

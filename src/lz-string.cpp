@@ -25,7 +25,9 @@ using string = std::u16string;
 #define _U(x) u##x
 #endif
 #endif
-namespace __inner {
+
+namespace {
+
 const string keyStrBase64{_U("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=")};
 const string::value_type equal{_U('=')};
 
@@ -428,7 +430,6 @@ template <typename Fn> string _decompress(int length, int resetValue, Fn getNext
 string compressToBase64(const string & input) {
     if (input.empty())
         return {};
-    using namespace __inner;
     auto res = _compress(input, 6, [](int a) { return keyStrBase64.at(a); });
     switch (res.length() % 4) { // To produce valid Base64
         default:                // When could this happen ?
@@ -446,7 +447,6 @@ string compressToBase64(const string & input) {
 string decompressFromBase64(const string & input) {
     if (input.empty())
         return {};
-    using namespace __inner;
     std::unordered_map<string::value_type, int> baseReverseDic;
     for (int i = 0; i < keyStrBase64.length(); ++i)
         baseReverseDic[keyStrBase64.at(i)] = i;

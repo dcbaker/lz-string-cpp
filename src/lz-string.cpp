@@ -5,10 +5,12 @@
  *
  */
 
+#include <cassert>
 #include <string>
 #include <unordered_map>
 
 #include "lz-string.hpp"
+#include "lz-string-config.hpp"
 
 // preserve all original comments and naming from
 // https://github.com/pieroxy/lz-string/blob/master/libs/lz-string.js
@@ -434,7 +436,6 @@ string compressToBase64(const string & input) {
         return {};
     auto res = _compress(input, 6, [](int a) { return keyStrBase64.at(a); });
     switch (res.length() % 4) { // To produce valid Base64
-        default:                // When could this happen ?
         case 0:
             return res;
         case 1:
@@ -443,6 +444,8 @@ string compressToBase64(const string & input) {
             return res + string(2, equal);
         case 3:
             return res + string(1, equal);
+        default:
+            UNREACHABLE;
     }
 }
 

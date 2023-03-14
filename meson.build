@@ -6,7 +6,28 @@ project(
   'cpp',
   version : '0.1-devel',
   meson_version : '>= 0.60',
-  default_options : ['cpp_std=c++11'],
+  default_options : ['cpp_std=c++11', 'b_ndebug=if-release'],
+)
+
+cpp = meson.get_compiler('cpp')
+conf = configuration_data()
+
+# An unreachable macro.
+# for debug builds assert if we hit unreachable code, it's definately a bug use
+# builtin functionality if available, and fall back to an assert otherwise
+if get_option('debug')
+  conf.set('UNREACHABLE', 'assert(false)')
+elif cpp.has_define('__GNUC__')
+  conf.set('UNREACHABLE', '__builtin_unreachable()')
+elif cpp.has_define('_MSC_VER')
+  conf.set('UNREACHABLE', '__assume(false)')
+else
+  conf.set('UNREACHABLE', 'assert(false)')
+endif
+
+configure_file(
+  configuration : conf,
+  output : 'lz-string-config.hpp',
 )
 
 inc = include_directories('include')

@@ -54,7 +54,8 @@ test(
     'lz-string-test',
     'tests/test.cpp',
     dependencies : [dep, dep_gtest],
-  )
+  ),
+  protocol : 'gtest',
 )
 
 meson.override_dependency('lz-string', dep)

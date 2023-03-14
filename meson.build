@@ -37,3 +37,9 @@ test(
 )
 
 meson.override_dependency('lz-string', dep)
+
+pkg = import('pkgconfig')
+pkg.generate(
+  lib,
+  description : 'A C++ implementation of the lz-string compression algorithm'
+)

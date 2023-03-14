@@ -1,0 +1,86 @@
+
+name: Meson Build Test
+
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        cfg:
+          - { id: gcc, cc: gcc, cpp: g++, setup_options: null}
+          - { id: gcc-sanitize, cc: gcc, cpp: g++, setup_options: -Db_sanitize=address,undefined}
+          - { id: clang, cc: clang, cpp: clang++, setup_options: null}
+
+    env:
+      CC: ccache ${{ matrix.cfg.cc }}
+      CXX: ccache ${{ matrix.cfg.cpp }}
+
+    steps:
+      - name: apt
+        run: |
+          sudo apt update
+          sudo apt install libgtest-dev ninja-build ccache clang
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Setup ccache
+        uses: hendrikmuhs/ccache-action@v1.0.5
+        with:
+          key: ${{ matrix.id }}
+      - uses: BSFishy/meson-build@v1.0.3
+        with:
+          # Use 0.60 to get graceful failures of gtest protocol
+          meson-version: 0.60.3
+          setup-options: ${{ matrix.cfg.setup_options }}
+          action: test
+          directory: builddir
+
+  windows:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1.1
+      - name: Install Meson
+        # Use 0.64 for for better --vsenv
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install meson==0.64
+      - name: Meson Compile
+        run: |
+          meson setup builddir --vsenv --backend=vs --wrap-mode=forcefallback
+          meson compile -C builddir
+      - name: Meson test
+        run: meson test -C builddir
+
+  macos:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - uses: ashutoshvarma/setup-ninja@v1.1
+      - uses: BSFishy/meson-build@v1.0.3
+        with:
+          # Use 0.60 to get graceful failures of gtest protocol
+          meson-version: 0.60.3
+          setup-options: --wrap-mode=forcefallback
+          action: test
+          directory: builddir

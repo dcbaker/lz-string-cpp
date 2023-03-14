@@ -25,4 +25,15 @@ dep = declare_dependency(
   include_directories : inc,
 )
 
+dep_gtest = dependency('gtest_main')
+
+test(
+  'main',
+  executable(
+    'lz-string-test',
+    'tests/test.cpp',
+    dependencies : [dep, dep_gtest],
+  )
+)
+
 meson.override_dependency('lz-string', dep)

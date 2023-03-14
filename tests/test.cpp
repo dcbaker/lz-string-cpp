@@ -1,5 +1,12 @@
-﻿#include "../src/lz-string.hpp"
-#include "pch.h"
+﻿/*
+ * SPDX-License-Identifier: MIT
+ * Copyright (c) 2021 Andrey Krasnov
+ * Copyright © 2023 Dylan Baker
+ */
+
+#include <gtest/gtest.h>
+
+#include "lz-string.hpp"
 
 TEST(compressToBase64, CompareToGold_short) {
     lzstring::string json = _U(R"([{"n":"ps1.active","q":1,"t":1474356144455,"v":21}])");

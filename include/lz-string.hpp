@@ -14,14 +14,8 @@ namespace lzstring {
 
 #ifdef _MSC_VER
 using string = std::wstring;
-#ifndef _U
-#define _U(x) L##x
-#endif
 #else
 using string = std::u16string;
-#ifndef _U
-#define _U(x) u##x
-#endif
 #endif
 
 string compressToBase64(const string & input);

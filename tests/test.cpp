@@ -8,6 +8,16 @@
 
 #include "lz-string.hpp"
 
+#ifdef _MSC_VER
+#ifndef _U
+#define _U(x) L##x
+#endif
+#else
+#ifndef _U
+#define _U(x) u##x
+#endif
+#endif
+
 TEST(compressToBase64, CompareToGold_short) {
     lzstring::string json = _U(R"([{"n":"ps1.active","q":1,"t":1474356144455,"v":21}])");
     lzstring::string gold =

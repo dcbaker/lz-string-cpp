@@ -15,20 +15,18 @@
 // preserve all original comments and naming from
 // https://github.com/pieroxy/lz-string/blob/master/libs/lz-string.js
 namespace lzstring {
+
+namespace {
+
 #ifdef _MSC_VER
-using string = std::wstring;
 #ifndef _U
 #define _U(x) L##x
 #endif
 #else
-using string = std::u16string;
-#include <uchar.h>
 #ifndef _U
 #define _U(x) u##x
 #endif
 #endif
-
-namespace {
 
 const string keyStrBase64{_U("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=")};
 const string::value_type equal{_U('=')};

@@ -19,7 +19,6 @@ using string = std::wstring;
 #endif
 #else
 using string = std::u16string;
-#include <uchar.h>
 #ifndef _U
 #define _U(x) u##x
 #endif

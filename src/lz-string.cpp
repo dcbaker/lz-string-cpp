@@ -31,12 +31,12 @@ namespace {
 const string keyStrBase64{_U("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=")};
 const string::value_type equal{_U('=')};
 
-int charCodeAt(const string & str, int pos) { return static_cast<int>(str.at(pos)); }
+int charCodeAt(const string & str, const int pos) { return static_cast<int>(str.at(pos)); }
 
-string f(int ascii) { return {static_cast<string::value_type>(ascii)}; }
+string f(const int ascii) { return {static_cast<string::value_type>(ascii)}; }
 
 template <typename Fn>
-string _compress(const string & uncompressed, int bitsPerChar, Fn getCharFromInt) {
+string _compress(const string & uncompressed, const int bitsPerChar, const Fn getCharFromInt) {
     int i = 0;
     int value = 0;
 
@@ -255,7 +255,7 @@ string _compress(const string & uncompressed, int bitsPerChar, Fn getCharFromInt
     return context_data;
 }
 
-template <typename Fn> string _decompress(string::size_type length, int resetValue, Fn getNextValue) {
+template <typename Fn> string _decompress(const string::size_type length, const int resetValue, const Fn getNextValue) {
     std::unordered_map<int, string> dictionary;
 
     int next = 0;

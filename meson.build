@@ -36,6 +36,7 @@ lib = library(
   'lz-string',
   'src/lz-string.cpp',
   include_directories : inc,
+  vs_module_defs : 'src/lz-string.def',
   install : true,
 )
 

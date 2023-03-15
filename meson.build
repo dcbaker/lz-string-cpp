@@ -4,7 +4,7 @@
 project(
   'lz-string',
   'cpp',
-  version : '0.1.0-devel',
+  version : '0.1.1',
   meson_version : '>= 0.60',
   default_options : ['cpp_std=c++14', 'b_ndebug=if-release'],
 )

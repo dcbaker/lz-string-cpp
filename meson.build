@@ -4,7 +4,7 @@
 project(
   'lz-string',
   'cpp',
-  version : '0.1',
+  version : '0.1.0-devel',
   meson_version : '>= 0.60',
   default_options : ['cpp_std=c++14', 'b_ndebug=if-release'],
 )
@@ -36,6 +36,7 @@ lib = library(
   'lz-string',
   'src/lz-string.cpp',
   include_directories : inc,
+  soversion : meson.project_version().split('-')[0],
   vs_module_defs : 'src/lz-string.def',
   install : true,
 )
